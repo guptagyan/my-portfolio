@@ -1,21 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="text-center">Upload Your Resume</h1>
-
-<div class="container mt-4">
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-
-    <div class="card mx-auto shadow p-4" style="max-width: 500px;">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary w-100">Upload Resume</button>
-        </form>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    {% if github_data.avatar_url %}
+                    <img src="{{ github_data.avatar_url }}" class="rounded-circle mb-3" width="150" alt="Profile">
+                    {% endif %}
+                    <h3>{{ user.username }}</h3>
+                    {% if github_data.name %}
+                    <p class="text-muted">{{ github_data.name }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Account Information</h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        {% if github_data.email %}
+                        <dt class="col-sm-3">Email</dt>
+                        <dd class="col-sm-9">{{ github_data.email }}</dd>
+                        {% endif %}
+                        
+                        {% if github_data.html_url %}
+                        <dt class="col-sm-3">GitHub</dt>
+                        <dd class="col-sm-9">
+                            <a href="{{ github_data.html_url }}" target="_blank">
+                                {{ github_data.html_url }}
+                            </a>
+                        </dd>
+                        {% endif %}
+                    </dl>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

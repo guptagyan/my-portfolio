@@ -15,6 +15,19 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+
+@login_required
+def profile(request):
+    user = request.user
+    github_data = {}
+    if user.social_auth.filter(provider='github').exists():
+        github_data = user.social_auth.get(provider='github').extra_data
+    
+    return render(request, 'profile.html', {
+        'user': user,
+        'github_data': github_data
+    })
+
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)
     

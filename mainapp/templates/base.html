@@ -16,7 +16,36 @@
     <link rel="stylesheet" href="{% static 'css/contact.css' %}">
     <link rel="stylesheet" href="{% static 'css/project.css' %}">
 
-
+    <style>
+        /* GitHub Login Button Styles */
+        .btn-github {
+            background-color: #24292e;
+            color: white;
+            border-radius: 5px;
+            padding: 8px 15px;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+        .btn-github:hover {
+            background-color: #2d3338;
+            color: white;
+            transform: translateY(-2px);
+        }
+        /* User Dropdown Styles */
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .dropdown-item {
+            padding: 8px 20px;
+        }
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+    </style>
 </head>
 <body>
     <!-- Scroll Indicator -->
@@ -38,16 +67,31 @@
                     <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.path == '/resume/' %}active{% endif %}" href="{% url 'resume' %}">Resume</a></li>
-                    
-                    <li class="nav-item">
-    <a class="nav-link {% if request.path == '/projects/' %}active{% endif %}" 
-       href="{% url 'projects' %}">  <!-- Without namespace -->
-       Projects
-    </a>
-</li>
-
-                    <!-- <li class="nav-item"><a class="nav-link {% if request.path == '/projects/' %}active{% endif %}" href="{% url 'projects' %}">Projects</a></li> -->
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/projects/' %}active{% endif %}" href="{% url 'projects' %}">Projects</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.path == '/contact/' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
+                    
+                    <!-- Authentication Section -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            {% if user.social_auth.get.provider == 'github' %}
+                            <img src="{{ user.social_auth.get.extra_data.avatar_url }}" class="user-avatar" alt="Profile">
+                            {% endif %}
+                            {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'social:begin' 'github' %}" class="btn btn-github">
+                            <i class="fab fa-github me-1"></i> Login with GitHub
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -69,6 +113,11 @@
                     <a href="#" class="animate__animated animate__bounceIn delay-3"><i class="fab fa-twitter"></i></a>
                     <a href="#" class="animate__animated animate__bounceIn delay-4"><i class="fab fa-instagram"></i></a>
                 </div>
+                {% if user.is_authenticated %}
+                <div class="user-info text-center mt-2">
+                    <small class="text-muted">Logged in as {{ user.username }}</small>
+                </div>
+                {% endif %}
                 <p class="copyright">&copy; 2025 Gyan Prakash. All Rights Reserved.</p>
             </div>
         </div>
@@ -101,6 +150,12 @@
             if (currentLink) {
                 currentLink.classList.add('animate__pulse');
             }
+            
+            // Initialize tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
     </script>
 </body>
