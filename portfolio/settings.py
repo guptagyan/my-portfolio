@@ -52,6 +52,10 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Note: No parentheses
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://my-portfolio-sbew.onrender.com"
+]
+
 ROOT_URLCONF = 'portfolio.urls'
 
 # SOCIAL_AUTH_GITHUB_KEY = 'Ov23liHnQwxfmCi3H6Gc'
