@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card p-4 shadow-lg border-0" style="max-width: 550px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(8px); border-radius: 15px;">
+        <h2 class="text-center text-primary mb-4">✏️ Edit Project</h2>
+
+        {% if project %}
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Project Title</label>
+                    <input type="text" class="form-control rounded-pill" name="title" value="{{ project.title }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Description</label>
+                    <textarea class="form-control rounded" name="description" rows="4" required>{{ project.description }}</textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">GitHub Link</label>
+                    <input type="url" class="form-control rounded-pill" name="github_link" value="{{ project.github_link }}" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100 rounded-pill" style="font-size: 1.2rem; transition: 0.3s;">
+                    💾 Save Changes
+                </button>
+                
+                <a href="{% url 'projects' %}" class="btn btn-secondary w-100 rounded-pill mt-2">❌ Cancel</a>
+            </form>
+        {% else %}
+            <div class="alert alert-danger text-center">
+                🚫 Project Not Found!
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+        color: #333;
+    }
+
+    .card {
+        color: #222;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+        background-color: #2458a6;
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

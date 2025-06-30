@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Project Header -->
+            <div class="mb-5">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'projects' %}">Projects</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ project.title }}</li>
+                    </ol>
+                </nav>
+                
+                <h1 class="display-4 mb-3">{{ project.title }}</h1>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <small class="text-muted me-3">
+                        <i class="far fa-calendar-alt me-1"></i>
+                        {{ project.created_at|date:"F j, Y" }}
+                    </small>
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" class="btn btn-sm btn-outline-dark">
+                        <i class="fab fa-github me-1"></i> View on GitHub
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Featured Image -->
+            {% if project.thumbnail %}
+            <div class="mb-5 text-center">
+                <img src="{{ project.thumbnail.url }}" 
+                     alt="{{ project.title }}" 
+                     class="img-fluid rounded shadow"
+                     style="max-height: 500px; width: auto;">
+            </div>
+            {% endif %}
+
+            <!-- Project Description -->
+            <div class="mb-5">
+                <h2 class="h4 mb-3">About This Project</h2>
+                <div class="project-content">
+                    {{ project.description|linebreaks }}
+                </div>
+            </div>
+
+            <!-- Key Features -->
+            {% if features %}
+            <div class="mb-5">
+                <h2 class="h4 mb-3">Key Features</h2>
+                <ul class="list-group list-group-flush">
+                    {% for feature in features %}
+                    <li class="list-group-item bg-light">{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Technologies Used -->
+            {% if technologies %}
+            <div class="mb-5">
+                <h2 class="h4 mb-3">Technologies Used</h2>
+                <div class="d-flex flex-wrap gap-2">
+                    {% for tech in technologies %}
+                    <span class="badge bg-primary py-2 px-3">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Related Projects -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h3 class="h5 mb-0">Related Projects</h3>
+                </div>
+                <div class="card-body">
+                    {% if related_projects %}
+                    <div class="list-group list-group-flush">
+                        {% for project in related_projects %}
+                        <a href="{{ project.get_absolute_url }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex align-items-center">
+                                {% if project.thumbnail %}
+                                <img src="{{ project.thumbnail.url }}" 
+                                     alt="{{ project.title }}"
+                                     class="rounded me-3"
+                                     style="width: 60px; height: 60px; object-fit: cover;">
+                                {% else %}
+                                <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center"
+                                     style="width: 60px; height: 60px;">
+                                    <i class="fas fa-code text-muted"></i>
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <h6 class="mb-0">{{ project.title }}</h6>
+                                    <small class="text-muted">{{ project.created_at|date:"M Y" }}</small>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">No related projects found</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Project Meta -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h3 class="h5 mb-0">Project Details</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <strong>Created:</strong>
+                            <span class="float-end">{{ project.created_at|date:"F j, Y" }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Last Updated:</strong>
+                            <span class="float-end">{{ project.updated_at|date:"F j, Y" }}</span>
+                        </li>
+                        <li>
+                            <strong>Status:</strong>
+                            <span class="float-end badge bg-success">Completed</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .project-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    
+    .project-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1rem 0;
+    }
+    
+    .list-group-item {
+        transition: all 0.3s ease;
+    }
+    
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+{% endblock %}

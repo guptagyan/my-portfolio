@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="about-container">
+    <!-- Animated Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg-animation">
+            <div class="circle x1"></div>
+            <div class="circle x2"></div>
+            <div class="circle x3"></div>
+            <div class="circle x4"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <!-- Animated Profile Image -->
+                <div class="profile-wrapper animate__animated animate__fadeInLeft">
+                    <div class="profile-img-container">
+                        <img src="{% static 'images/gg.jpg' %}" alt="Gyan Prakash" class="profile-img">
+                        <div class="tech-bubbles">
+                            <span class="bubble bubble-1">Python</span>
+                            <span class="bubble bubble-2">C#</span>
+                            <span class="bubble bubble-3">Django</span>
+                            <span class="bubble bubble-4">AI/ML</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hero Text -->
+                <div class="hero-text animate__animated animate__fadeInRight">
+                    <h1 class="hero-title">
+                        <span class="text-gradient">About Me</span>
+                    </h1>
+                    <div class="hero-description">
+                        <p class="lead">
+                            I'm <strong class="highlight">Gyan Prakash</strong>, a passionate <span class="typing-animation"></span>
+                        </p>
+                        <p>
+                            With <span class="counter" data-target="2">0</span>+ years of experience building innovative solutions in WPF (C#), Python, and modern web technologies.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#experience" class="btn btn-primary btn-glow">
+                                <i class="fas fa-briefcase me-2"></i> My Experience
+                            </a>
+                            <a href="#skills" class="btn btn-outline-light">
+                                <i class="fas fa-code me-2"></i> My Skills
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section with Timeline -->
+    <section id="experience" class="experience-section">
+        <div class="container">
+            <h2 class="section-title animate__animated animate__fadeInUp">
+                Professional <span class="text-gradient">Journey</span>
+            </h2>
+            
+            <div class="timeline">
+                <!-- Current Position -->
+                <div class="timeline-item animate__animated animate__fadeInRight">
+                    <div class="timeline-badge pulse"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-header">
+                            <h3>Vulcan Advance Intelligence Computing</h3>
+                            <span class="timeline-date">2022 - Present</span>
+                        </div>
+                        <div class="timeline-content">
+                            <p>Developing smart traffic management systems and AI-driven applications</p>
+                            <ul>
+                                <li>VsuiteApplication for ATMS</li>
+                                <li>Real-time CCTV monitoring</li>
+                                <li>AI-powered analytics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Projects -->
+                <div class="timeline-item animate__animated animate__fadeInLeft">
+                    <div class="timeline-badge"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-header">
+                            <h3>Key Projects</h3>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="project-card">
+                                <h4>E-commerce Platform</h4>
+                                <p>Django-based solution with payment integration</p>
+                            </div>
+                            <div class="project-card">
+                                <h4>Object Detection System</h4>
+                                <p>OpenCV implementation for security systems</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section with Animated Cards -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title animate__animated animate__fadeInUp">
+                Technical <span class="text-gradient">Expertise</span>
+            </h2>
+            
+            <div class="skills-grid">
+                <!-- Development Skills -->
+                <div class="skill-category animate__animated animate__fadeInUp">
+                    <div class="skill-header">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Development</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item" data-percent="95">
+                            <span>WPF (C#)</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-percent="90">
+                            <span>Django</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-percent="85">
+                            <span>ASP.NET Core</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Data Skills -->
+                <div class="skill-category animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="skill-header">
+                        <i class="fas fa-database"></i>
+                        <h3>Data</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item" data-percent="90">
+                            <span>SQL Server</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-percent="85">
+                            <span>Pandas</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-percent="80">
+                            <span>NumPy</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI/ML Skills -->
+                <div class="skill-category animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="skill-header">
+                        <i class="fas fa-robot"></i>
+                        <h3>AI/ML</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item" data-percent="85">
+                            <span>OpenCV</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-percent="80">
+                            <span>Scikit-learn</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-percent="75">
+                            <span>TensorFlow</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- CSS Styles -->
+
+<!-- JavaScript for Animations -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Typing Animation
+        const typingTexts = [
+            "Software Developer",
+            "Python Expert",
+            "C# Developer",
+            "Problem Solver"
+        ];
+        let currentText = 0;
+        let charIndex = 0;
+        const typingElement = document.querySelector('.typing-animation');
+        
+        function typeWriter() {
+            if (charIndex < typingTexts[currentText].length) {
+                typingElement.textContent += typingTexts[currentText].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 100);
+            } else {
+                setTimeout(eraseText, 2000);
+            }
+        }
+        
+        function eraseText() {
+            if (charIndex > 0) {
+                typingElement.textContent = typingTexts[currentText].substring(0, charIndex-1);
+                charIndex--;
+                setTimeout(eraseText, 50);
+            } else {
+                currentText = (currentText + 1) % typingTexts.length;
+                setTimeout(typeWriter, 500);
+            }
+        }
+        
+        // Start typing animation
+        setTimeout(typeWriter, 1000);
+        
+        // Counter Animation
+        const counter = document.querySelector('.counter');
+        const target = parseInt(counter.getAttribute('data-target'));
+        let count = 0;
+        const duration = 2000; // Animation duration in ms
+        const increment = target / (duration / 16); // Roughly 60fps
+        
+        function updateCounter() {
+            count += increment;
+            if (count < target) {
+                counter.textContent = Math.floor(count);
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = target + '+';
+            }
+        }
+        
+        // Start counter when visible
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                updateCounter();
+                observer.unobserve(counter);
+            }
+        });
+        
+        observer.observe(counter);
+        
+        // Skill Bar Animation
+        const skillItems = document.querySelectorAll('.skill-item');
+        skillItems.forEach(item => {
+            const percent = item.getAttribute('data-percent');
+            const progressBar = item.querySelector('.skill-progress');
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    progressBar.style.width = percent + '%';
+                    observer.unobserve(item);
+                }
+            });
+            
+            observer.observe(item);
+        });
+    });
+</script>
+{% endblock %}

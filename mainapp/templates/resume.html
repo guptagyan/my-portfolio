@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 p-4 text-center" style="max-width: 600px; margin: auto; background: rgba(255, 255, 255, 0.9); border-radius: 15px;">
+        <h2 class="text-primary fw-bold mb-4">📄 My Resume</h2>
+
+        {% if resume_entry and resume_entry.resume_file %}
+        <div class="d-flex flex-column align-items-center">
+            <i class="fas fa-file-pdf fa-5x text-danger mb-3" style="opacity: 0.8;"></i>
+            <h5 class="mb-2">{{ resume_entry.name|default:"My Resume" }}</h5>
+            <p class="text-muted mb-3">Last updated: {{ resume_entry.uploaded_at|date:"F j, Y" }}</p>
+            <p class="mb-4">Click below to download my latest resume:</p>
+            
+            <!-- Primary Download Button -->
+            <a href="{% url 'download_resume' resume_entry.id %}" 
+               class="btn btn-lg btn-primary rounded-pill px-4 shadow-sm mb-2" 
+               download="{{ resume_entry.name|default:'resume' }}_{{ resume_entry.uploaded_at|date:'Y-m-d' }}.pdf">
+                <i class="fas fa-download me-2"></i> Download PDF
+            </a>
+            
+            <!-- Fallback Download Link -->
+            <small class="text-muted mt-2">
+                File size: {{ resume_entry.resume_file.size|filesizeformat }} | 
+                <a href="{% url 'download_resume' resume_entry.id %}" class="text-decoration-none">Alternative download</a>
+            </small>
+            
+            <!-- PDF Preview (optional) -->
+            <div class="mt-4 w-100">
+                <iframe src="{{ resume_entry.resume_file.url }}" 
+                        width="100%" 
+                        height="400px" 
+                        style="border: 1px solid #eee; border-radius: 8px;"
+                        title="Resume Preview">
+                </iframe>
+            </div>
+        </div>
+        {% else %}
+        <div class="d-flex flex-column align-items-center">
+            <i class="fas fa-exclamation-circle fa-5x text-warning mb-3" style="opacity: 0.7;"></i>
+            <div class="alert alert-warning text-center fw-bold w-100">
+                ⚠️ No resume available
+            </div>
+            {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'admin:mainapp_resume_add' %}" class="btn btn-outline-primary rounded-pill px-4 mt-2">
+                <i class="fas fa-upload me-2"></i> Upload Resume (Admin)
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
