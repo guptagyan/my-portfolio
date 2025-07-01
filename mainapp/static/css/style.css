@@ -195,3 +195,12 @@ footer::before {
         text-align: center;
     }
 }
+
+.gyan-logo {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #007bff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-transform: uppercase;
+}
