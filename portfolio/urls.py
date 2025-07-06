@@ -18,6 +18,7 @@ urlpatterns = [
     path('resume/download/<int:id>/', views.download_resume, name='download_resume'),
     path('contact/', views.contact, name='contact'),
     path('profile/', views.profile, name='profile'),
+    path('chatbot/', views.chatbot_view, name='chatbot'),
 
     path('accounts/login/', LoginView.as_view(template_name='login.html'), name='login'),
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])

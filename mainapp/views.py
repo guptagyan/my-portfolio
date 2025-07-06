@@ -1,5 +1,7 @@
+import json
 import os
-from django.http import FileResponse, Http404
+import random
+from django.http import FileResponse, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
@@ -8,6 +10,8 @@ from .forms import ProfileForm, ProjectForm
 from .models import Project, Resume
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 def home(request):
     return render(request, 'home.html')
@@ -163,3 +167,138 @@ def edit_project(request, project_id):
 
 
     return render(request, "edit_project.html", {"project": project})
+
+
+@csrf_exempt
+@require_POST
+def chatbot(request):
+    try:
+        data = json.loads(request.body)
+        user_message = data.get('message', '').lower()
+        
+        # Enhanced response logic for portfolio website
+        greetings = ['hi', 'hello', 'hey', 'greetings', 'namaste', 'hola']
+        farewells = ['bye', 'goodbye', 'see you', 'later', 'tata', 'exit']
+        thanks = ['thanks', 'thank you', 'appreciate it', 'धन्यवाद', 'शुक्रिया']
+        skills = ['skill', 'technology', 'tech stack', 'expertise', 'knowledge']
+        experience = ['experience', 'background', 'work history', 'career']
+        education = ['education', 'degree', 'qualification', 'college', 'university']
+        hire = ['hire', 'recruit', 'job', 'opportunity', 'position', 'vacancy']
+        services = ['service', 'offer', 'provide', 'what do you do']
+        resume = ['resume', 'cv', 'download']
+        social = ['social', 'linkedin', 'github', 'twitter', 'instagram', 'contact']
+        
+        if any(word in user_message for word in greetings):
+            responses = [
+                "Hello! I'm Gyan's AI assistant. How can I help you today?",
+                "Namaste! Welcome to Gyan's portfolio. What would you like to know?",
+                "Hi there! I can tell you about Gyan's skills, projects, and experience. What interests you?",
+                "Greetings! I'm here to provide information about Gyan's professional portfolio."
+            ]
+        elif any(word in user_message for word in farewells):
+            responses = [
+                "Goodbye! Feel free to return if you have more questions about Gyan's work.",
+                "See you later! Don't hesitate to reach out if you need more information.",
+                "Bye! You can always contact Gyan directly through the contact page.",
+                "Have a great day! Check out Gyan's projects when you get a chance."
+            ]
+        elif any(word in user_message for word in thanks):
+            responses = [
+                "You're welcome! Is there anything else you'd like to know about Gyan's portfolio?",
+                "My pleasure! Gyan would be happy to connect if you have more questions.",
+                "Happy to help! Would you like to see Gyan's latest projects?",
+                "No problem! Let me know if you need information about skills or experience."
+            ]
+        elif any(word in user_message for word in skills):
+            responses = [
+                "Gyan specializes in Python, Django, JavaScript, and modern web development technologies.",
+                "The tech stack includes Django, React, PostgreSQL, and various cloud technologies.",
+                "Key skills: Full-stack development, AI integration, database design, and API development.",
+                "Technical expertise spans web development, machine learning, and cloud deployment."
+            ]
+        elif any(word in user_message for word in experience):
+            responses = [
+                "Gyan has X years of professional experience in software development and AI solutions.",
+                "Work history includes positions at [Company A] and [Company B], focusing on web technologies.",
+                "Professional background combines software engineering with innovative problem-solving.",
+                "Experience ranges from startup environments to enterprise-level applications."
+            ]
+        elif any(word in user_message for word in education):
+            responses = [
+                "Gyan holds a [Degree] in [Field] from [University].",
+                "Educational background includes specialized training in [Specific Technology/Field].",
+                "Formal education in computer science complemented by numerous certifications.",
+                "Degree from [University] with focus on practical software development."
+            ]
+        elif any(word in user_message for word in hire):
+            responses = [
+                "Gyan is available for freelance projects and full-time opportunities. Please check the contact page.",
+                "For hiring inquiries, you can reach out directly through the contact form or LinkedIn.",
+                "Gyan is open to new opportunities. The resume is available for download in the resume section.",
+                "Interested in working together? Let's connect through the contact information provided."
+            ]
+        elif any(word in user_message for word in services):
+            responses = [
+                "Services include custom web development, AI solutions, and technical consulting.",
+                "Gyan offers full-stack development services from concept to deployment.",
+                "Available for project-based work including API development, database design, and more.",
+                "Services tailored to client needs with focus on quality and innovative solutions."
+            ]
+        elif any(word in user_message for word in resume):
+            responses = [
+                "You can download Gyan's resume from the Resume section of this website.",
+                "The resume is available for download - check the navigation menu for the Resume page.",
+                "CV download option is provided in the resume section with detailed experience.",
+                "Resume PDF is available with complete professional history and skills."
+            ]
+        elif any(word in user_message for word in social):
+            responses = [
+                "Social media links are available in the website footer. Connect with Gyan on LinkedIn for professional updates.",
+                "You can find all social media profiles at the bottom of each page. GitHub has project code samples.",
+                "Social links are in the footer section - including GitHub, LinkedIn, and others.",
+                "Connect with Gyan through various platforms - links are at the bottom of the page."
+            ]
+        elif 'project' in user_message:
+            responses = [
+                "Recent projects include [Project A], [Project B], and [Project C]. Full details in Projects section.",
+                "Portfolio showcases various web applications and AI projects. Visit the Projects page for case studies.",
+                "Projects demonstrate skills in Django, React, and machine learning. Each has detailed documentation.",
+                "You'll find project examples with descriptions, technologies used, and live demos in the Projects section."
+            ]
+        elif 'contact' in user_message:
+            responses = [
+                "Contact information is available on the Contact page. You can also use the form to send a direct message.",
+                "You can reach Gyan through email or the contact form. Social media links are also provided.",
+                "For professional inquiries, please use the contact form or LinkedIn profile.",
+                "Multiple contact options are available - choose your preferred method from the Contact page."
+            ]
+        elif 'about' in user_message:
+            responses = [
+                "The About page contains Gyan's professional story, skills, and approach to development.",
+                "You'll find a comprehensive professional bio in the About section.",
+                "About section highlights Gyan's background, philosophy, and technical capabilities.",
+                "Personal and professional details are available in the About page narrative."
+            ]
+        else:
+            responses = [
+                "I'm Gyan's portfolio assistant. Could you ask about skills, projects, or experience?",
+                "I specialize in answering questions about Gyan's professional background. Try asking about specific skills or projects.",
+                "For best results, ask about Gyan's technical skills, work experience, or portfolio projects.",
+                "I can tell you about Gyan's qualifications. Try questions like 'What technologies do you know?' or 'Tell me about your experience'."
+            ]
+        
+        return JsonResponse({
+            'response': random.choice(responses),
+            'suggestions': [
+                "Ask about skills",
+                "See projects",
+                "Request experience details",
+                "How to contact"
+            ]
+        })
+    
+    except Exception as e:
+        return JsonResponse({
+            'response': "Apologies, I'm having trouble processing your request. Please try again later.",
+            'error': str(e)
+        }, status=500)
