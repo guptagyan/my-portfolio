@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static 'css/contact.css' %}">
     <link rel="stylesheet" href="{% static 'css/project.css' %}">
 
+
 </head>
 <body>
     <!-- Scroll Indicator -->
@@ -24,11 +25,15 @@
     <!-- Navbar Section -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
+            {% comment %} <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="Gyan Prakash Logo" class="animate__animated animate__fadeInLeft">
+            </a> {% endcomment %}
+
             <a class="navbar-brand gyan-logo animate__animated animate__bounceIn" href="{% url 'home' %}">
-                <div class="gyan-circle">
-                    GYAN
-                </div>
-            </a>
+    <div class="gyan-circle">
+        GYAN
+    </div>
+</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,12 +45,15 @@
                     <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.path == '/resume/' %}active{% endif %}" href="{% url 'resume' %}">Resume</a></li>
+                    
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/projects/' %}active{% endif %}" 
-                           href="{% url 'projects' %}">
-                           Projects
-                        </a>
-                    </li>
+    <a class="nav-link {% if request.path == '/projects/' %}active{% endif %}" 
+       href="{% url 'projects' %}">  <!-- Without namespace -->
+       Projects
+    </a>
+</li>
+
+                    <!-- <li class="nav-item"><a class="nav-link {% if request.path == '/projects/' %}active{% endif %}" href="{% url 'projects' %}">Projects</a></li> -->
                     <li class="nav-item"><a class="nav-link {% if request.path == '/contact/' %}active{% endif %}" href="{% url 'contact' %}">Contact</a></li>
                 </ul>
             </div>
@@ -58,26 +66,6 @@
         {% endblock %}
     </div>
 
-    <!-- Chatbot Section -->
-    <div class="container chatbot-container">
-        <div class="chatbot-toggle" id="chatbot-toggle">
-            <i class="fas fa-robot"></i>
-        </div>
-        <div class="chatbot-window" id="chatbot-window">
-            <div class="chatbot-header">
-                <h3>AI Assistant</h3>
-                <button class="close-chatbot" id="close-chatbot">&times;</button>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <!-- Messages will appear here -->
-            </div>
-            <div class="chat-input">
-                <input type="text" id="user-input" placeholder="Type your message...">
-                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer Section (Sticky at Bottom) -->
     <footer class="animate__animated animate__fadeInUp">
         <div class="container">
@@ -86,13 +74,16 @@
                     <a href="https://www.linkedin.com/in/gyan-prakash-691a0b238/" class="animate__animated animate__bounceIn delay-1"><i class="fab fa-linkedin"></i></a>
                     <a href="#" class="animate__animated animate__bounceIn delay-2"><i class="fab fa-github"></i></a>
                     <a href="#" class="animate__animated animate__bounceIn delay-3"><i class="fab fa-twitter"></i></a>
+
                     <a href="https://www.instagram.com/gyan1436/" class="social-link" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
+  <i class="fab fa-instagram"></i>
+</a>
+
                 </div>
                 <p class="copyright">&copy; 2025 Gyan Prakash. All Rights Reserved.</p>
             </div>
         </div>
+
     </footer>
 
     <!-- Bootstrap & Custom JS -->
@@ -124,66 +115,71 @@
             }
         });
 
-        // Chatbot functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const userInput = document.getElementById('user-input');
-            const sendBtn = document.getElementById('send-btn');
-            const chatMessages = document.getElementById('chat-messages');
-            const chatbotToggle = document.getElementById('chatbot-toggle');
-            const chatbotWindow = document.getElementById('chatbot-window');
-            const closeChatbot = document.getElementById('close-chatbot');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+    const chatMessages = document.getElementById('chat-messages');
+    
+    function addMessage(text, isUser) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (message) {
+            addMessage(message, true);
+            userInput.value = '';
             
-            function addMessage(text, isUser) {
-                const messageDiv = document.createElement('div');
-                messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
-                messageDiv.textContent = text;
-                chatMessages.appendChild(messageDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-            
-            function sendMessage() {
-                const message = userInput.value.trim();
-                if (message) {
-                    addMessage(message, true);
-                    userInput.value = '';
-                    
-                    fetch('/chatbot/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({ message: message })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        addMessage(data.response, false);
-                    })
-                    .catch(error => {
-                        addMessage("Sorry, there was an error.", false);
-                    });
-                }
-            }
-            
-            // Toggle chatbot window
-            chatbotToggle.addEventListener('click', function() {
-                chatbotWindow.classList.toggle('show');
+            fetch('/chatbot/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessage(data.response, false);
+            })
+            .catch(error => {
+                addMessage("Sorry, there was an error.", false);
             });
-            
-            closeChatbot.addEventListener('click', function() {
-                chatbotWindow.classList.remove('show');
-            });
-            
-            sendBtn.addEventListener('click', sendMessage);
-            userInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
-            });
-            
-            // Initial greeting
-            addMessage("Hello! How can I help you today?", false);
-        });
+        }
+    }
+    
+    sendBtn.addEventListener('click', sendMessage);
+    userInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+    
+    // Initial greeting
+    addMessage("Hello! How can I help you today?", false);
+});
     </script>
+
+    <!-- Add this just before the closing </body> tag in your base.html -->
+<div class="chatbot-container">
+    <div class="chatbot-header">
+        <span>AI Assistant</span>
+        <button class="chatbot-close-btn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chatbot-messages">
+        <!-- Messages will appear here -->
+    </div>
+    <div class="chatbot-input">
+        <input type="text" placeholder="Ask me anything..." class="chatbot-text-input">
+        <button class="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+<button class="chatbot-toggle-btn">
+    <i class="fas fa-robot"></i>
+</button>
 </body>
 </html>
