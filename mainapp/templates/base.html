@@ -115,55 +115,84 @@
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-    const userInput = document.getElementById('user-input');
-    const sendBtn = document.getElementById('send-btn');
-    const chatMessages = document.getElementById('chat-messages');
+       
+  
+   
+           
     
-    function addMessage(text, isUser) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
-        messageDiv.textContent = text;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
     
-    function sendMessage() {
-        const message = userInput.value.trim();
-        if (message) {
-            addMessage(message, true);
-            userInput.value = '';
-            
-            fetch('/chatbot/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ message: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                addMessage(data.response, false);
-            })
-            .catch(error => {
-                addMessage("Sorry, there was an error.", false);
-            });
-        }
-    }
-    
-    sendBtn.addEventListener('click', sendMessage);
-    userInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
-    
-    // Initial greeting
-    addMessage("Hello! How can I help you today?", false);
-});
+   
     </script>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatbotContainer = document.querySelector('.chatbot-container');
+        const toggleBtn = document.querySelector('.chatbot-toggle-btn');
+        const closeBtn = document.querySelector('.chatbot-close-btn');
+        const sendBtn = document.querySelector('.chatbot-send-btn');
+        const textInput = document.querySelector('.chatbot-text-input');
+        const messagesContainer = document.querySelector('.chatbot-messages');
+        
+        // Toggle chatbot visibility
+        toggleBtn.addEventListener('click', function() {
+            chatbotContainer.classList.toggle('active');
+        });
+        
+        closeBtn.addEventListener('click', function() {
+            chatbotContainer.classList.remove('active');
+        });
+        
+        // Send message function
+        function sendMessage() {
+            const message = textInput.value.trim();
+            if (message) {
+                // Add user message to UI
+                addMessage(message, 'user');
+                textInput.value = '';
+                
+                // Send to server
+                fetch('/chatbot/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Add bot response to UI
+                    addMessage(data.response, 'bot');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    addMessage("Sorry, I'm having trouble connecting. Please try again later.", 'bot');
+                });
+            }
+        }
+        
+        // Add message to chat UI
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender + '-message');
+            messageDiv.textContent = text;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Event listeners for sending messages
+        sendBtn.addEventListener('click', sendMessage);
+        textInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Initial greeting
+        setTimeout(() => {
+            addMessage("Hi there! I'm your AI assistant. How can I help you today?", 'bot');
+        }, 1000);
+    });
+</script>
     <!-- Add this just before the closing </body> tag in your base.html -->
 <div class="chatbot-container">
     <div class="chatbot-header">
