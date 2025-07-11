@@ -413,3 +413,27 @@
             font-size: 1.8rem;
         }
     }
+/* Original bubble positions */
+.bubble-1 {
+    top: -10px;
+    left: -20px;
+    animation-delay: 0s;
+}
+
+.bubble-2 {
+    top: 50px;
+    right: -30px;
+    animation-delay: 1s;
+}
+
+.bubble-3 {
+    bottom: 20px;
+    left: -10px;
+    animation-delay: 2s;
+}
+
+.bubble-4 {
+    bottom: -15px;
+    right: 20px;
+    animation-delay: 1.5s;
+}

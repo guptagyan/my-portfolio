@@ -23,7 +23,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # Always True for local development
 
-ALLOWED_HOSTS = ['my-portfolio-sbew.onrender.com']  # Only localhost
+# In settings.py
+ALLOWED_HOSTS = [
+    'my-portfolio-sbew.onrender.com',  # Production
+    'localhost',                       # Local development
+    '127.0.0.1'                        # Local development
+]
 
 # Application definition
 INSTALLED_APPS = [

@@ -119,5 +119,5 @@ class Project(models.Model):
     def clean(self):
         if not self.title:
             raise ValidationError("Project title cannot be empty")
-        if self.thumbnail and self.thumbnail.size > 2*1024*1024:  # 2MB limit
-            raise ValidationError("Thumbnail size must be less than 2MB")
+        if self.thumbnail and self.thumbnail.size > 10*1024*1024:  # 10MB limit
+            raise ValidationError("Thumbnail size must be less than 10MB")

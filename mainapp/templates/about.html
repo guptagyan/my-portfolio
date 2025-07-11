@@ -10,7 +10,7 @@
             <div class="circle x3"></div>
             <div class="circle x4"></div>
         </div>
-        
+
         <div class="container">
             <div class="hero-content">
                 <!-- Animated Profile Image -->
@@ -19,31 +19,69 @@
                         <img src="{% static 'images/gg.jpg' %}" alt="Gyan Prakash" class="profile-img">
                         <div class="tech-bubbles">
                             <span class="bubble bubble-1">Python</span>
-                            <span class="bubble bubble-2">C#</span>
-                            <span class="bubble bubble-3">Django</span>
+                            <span class="bubble bubble-2">.Net</span>
+                            <span class="bubble bubble-3">Django/FastAPI</span>
                             <span class="bubble bubble-4">AI/ML</span>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Hero Text -->
                 <div class="hero-text animate__animated animate__fadeInRight">
                     <h1 class="hero-title">
                         <span class="text-gradient">About Me</span>
                     </h1>
                     <div class="hero-description">
-                        <p class="lead">
-                            I'm <strong class="highlight">Gyan Prakash</strong>, a passionate <span class="typing-animation"></span>
+                        <p class="lead mb-4">
+                            I'm <strong class="highlight">Gyan Prakash</strong>, a passionate
+                            <span class="typing-animation text-primary"></span>
                         </p>
-                        <p>
-                            With <span class="counter" data-target="2">0</span>+ years of experience building innovative solutions in WPF (C#), Python, and modern web technologies.
-                        </p>
-                        <div class="hero-buttons">
-                            <a href="#experience" class="btn btn-primary btn-glow">
-                                <i class="fas fa-briefcase me-2"></i> My Experience
+
+                        <div class="experience-card p-4 rounded-4 bg-dark-soft mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="badge bg-primary-soft rounded-pill px-3 py-2 me-3">
+                                    <span class="counter fs-5 fw-bold" data-target="2">0</span>+ years
+                                </div>
+                                <h3 class="mb-0 text-light">Versatile Developer</h3>
+                            </div>
+
+                            <ul class="skills-list list-unstyled">
+                                <li class="d-flex align-items-center mb-3">
+                                    <div class="icon-box bg-primary-gradient me-3">
+                                        <i class="fas fa-globe"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="mb-1">Full Stack Development</h4>
+                                        <p class="text-muted mb-0">Python, Django, FastAPI, JavaScript</p>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <div class="icon-box bg-info-gradient me-3">
+                                        <i class="fas fa-desktop"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="mb-1">Desktop Applications</h4>
+                                        <p class="text-muted mb-0">WPF/C#, .NET Framework, Python</p>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="icon-box bg-purple-gradient me-3">
+                                        <i class="fas fa-cogs"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="mb-1">End-to-End Solutions</h4>
+                                        <p class="text-muted mb-0">Complete system design & implementation</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="hero-buttons d-flex flex-wrap gap-3">
+                            <a href="#experience" class="btn btn-primary btn-glow px-4 py-3">
+                                <i class="fas fa-briefcase me-2"></i> View Experience
                             </a>
-                            <a href="#skills" class="btn btn-outline-light">
-                                <i class="fas fa-code me-2"></i> My Skills
+                            <a href="#skills" class="btn btn-outline-light px-4 py-3">
+                                <i class="fas fa-code me-2"></i> Explore Skills
                             </a>
                         </div>
                     </div>
@@ -58,7 +96,7 @@
             <h2 class="section-title animate__animated animate__fadeInUp">
                 Professional <span class="text-gradient">Journey</span>
             </h2>
-            
+
             <div class="timeline">
                 <!-- Current Position -->
                 <div class="timeline-item animate__animated animate__fadeInRight">
@@ -66,7 +104,7 @@
                     <div class="timeline-card">
                         <div class="timeline-header">
                             <h3>Vulcan Advance Intelligence Computing</h3>
-                            <span class="timeline-date">2022 - Present</span>
+                            <span class="timeline-date">2023 - Present</span>
                         </div>
                         <div class="timeline-content">
                             <p>Developing smart traffic management systems and AI-driven applications</p>
@@ -74,11 +112,12 @@
                                 <li>VsuiteApplication for ATMS</li>
                                 <li>Real-time CCTV monitoring</li>
                                 <li>AI-powered analytics</li>
+                                <li>VMS (Variable Message Signs) for displaying safety messages to commuters</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Projects -->
                 <div class="timeline-item animate__animated animate__fadeInLeft">
                     <div class="timeline-badge"></div>
@@ -88,12 +127,47 @@
                         </div>
                         <div class="timeline-content">
                             <div class="project-card">
-                                <h4>E-commerce Platform</h4>
-                                <p>Django-based solution with payment integration</p>
+                                <h4>E-commerce Platform (Personal Project)</h4>
+                                <p>Full-featured Django e-commerce website with complete shopping functionality</p>
+                                <ul class="project-details">
+                                    <li><strong>Seller Features:</strong> Product management, inventory control, order
+                                        tracking</li>
+                                    <li><strong>Admin Panel:</strong> Complete backend management system</li>
+                                    <li><strong>Payment Integration:</strong> Razorpay payment gateway implementation
+                                    </li>
+                                    <li><strong>User Authentication:</strong> Secure login/signup with email
+                                        verification</li>
+
+                                    <li><strong>Live Demo:</strong> <a href="https://onlinebazar.onrender.com/"
+                                            target="_blank" rel="noopener noreferrer">onlinebazar.onrender.com</a></li>
+                                </ul>
                             </div>
                             <div class="project-card">
-                                <h4>Object Detection System</h4>
-                                <p>OpenCV implementation for security systems</p>
+                                <h4>VMS (Variable Message Signs) System</h4>
+                                <p>Developed Mercury VMS solution for displaying road safety messages on both multicolor
+                                    and single-color displays</p>
+                                <ul class="project-details">
+                                    <li>Implemented dynamic message scheduling</li>
+                                    <li>Integrated with traffic management systems</li>
+                                    <li>Developed priority-based message display system</li>
+                                    <li>Created remote monitoring and control interface</li>
+                                </ul>
+                            </div>
+                            <div class="project-card">
+                                <h4>ATMS/V-Suite Software</h4>
+                                <p>Developed and currently maintaining advanced traffic management system software with
+                                    multiple modules</p>
+                                <ul class="project-details">
+                                    <li><strong>VMS (Variable Message Signs):</strong> For displaying road safety
+                                        messages and alerts</li>
+                                    <li><strong>ECB (Emergency Call Box):</strong> Emergency communication system
+                                        management</li>
+                                    <li><strong>ATCC (Automatic Traffic Counter and Classifier):</strong> Real-time
+                                        traffic
+                                        signal optimization</li>
+                                    <li><strong>MET (Meteorological Equipment):</strong> Centralized message
+                                        distribution system</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -108,7 +182,7 @@
             <h2 class="section-title animate__animated animate__fadeInUp">
                 Technical <span class="text-gradient">Expertise</span>
             </h2>
-            
+
             <div class="skills-grid">
                 <!-- Development Skills -->
                 <div class="skill-category animate__animated animate__fadeInUp">
@@ -124,20 +198,20 @@
                             </div>
                         </div>
                         <div class="skill-item" data-percent="90">
-                            <span>Django</span>
+                            <span>Django/Flask/FastApi</span>
                             <div class="skill-bar">
                                 <div class="skill-progress"></div>
                             </div>
                         </div>
                         <div class="skill-item" data-percent="85">
-                            <span>ASP.NET Core</span>
+                            <span>ASP.NET Core Web Api</span>
                             <div class="skill-bar">
                                 <div class="skill-progress"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Data Skills -->
                 <div class="skill-category animate__animated animate__fadeInUp animate__delay-1s">
                     <div class="skill-header">
@@ -165,7 +239,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- AI/ML Skills -->
                 <div class="skill-category animate__animated animate__fadeInUp animate__delay-2s">
                     <div class="skill-header">
@@ -198,22 +272,21 @@
     </section>
 </div>
 
-<!-- CSS Styles -->
 
 <!-- JavaScript for Animations -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Typing Animation
         const typingTexts = [
-            "Software Developer",
+            "Software Developer (R&D)",
             "Python Expert",
-            "C# Developer",
+            ".Net Developer",
             "Problem Solver"
         ];
         let currentText = 0;
         let charIndex = 0;
         const typingElement = document.querySelector('.typing-animation');
-        
+
         function typeWriter() {
             if (charIndex < typingTexts[currentText].length) {
                 typingElement.textContent += typingTexts[currentText].charAt(charIndex);
@@ -223,10 +296,10 @@
                 setTimeout(eraseText, 2000);
             }
         }
-        
+
         function eraseText() {
             if (charIndex > 0) {
-                typingElement.textContent = typingTexts[currentText].substring(0, charIndex-1);
+                typingElement.textContent = typingTexts[currentText].substring(0, charIndex - 1);
                 charIndex--;
                 setTimeout(eraseText, 50);
             } else {
@@ -234,50 +307,52 @@
                 setTimeout(typeWriter, 500);
             }
         }
-        
+
         // Start typing animation
         setTimeout(typeWriter, 1000);
-        
+
         // Counter Animation
         const counter = document.querySelector('.counter');
-        const target = parseInt(counter.getAttribute('data-target'));
-        let count = 0;
-        const duration = 2000; // Animation duration in ms
-        const increment = target / (duration / 16); // Roughly 60fps
-        
-        function updateCounter() {
-            count += increment;
-            if (count < target) {
-                counter.textContent = Math.floor(count);
-                requestAnimationFrame(updateCounter);
-            } else {
-                counter.textContent = target + '+';
+        if (counter) {
+            const target = parseInt(counter.getAttribute('data-target'));
+            let count = 0;
+            const duration = 2000; // Animation duration in ms
+            const increment = target / (duration / 16); // Roughly 60fps
+
+            function updateCounter() {
+                count += increment;
+                if (count < target) {
+                    counter.textContent = Math.floor(count);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target + '+';
+                }
             }
+
+            // Start counter when visible
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    updateCounter();
+                    observer.unobserve(counter);
+                }
+            });
+
+            observer.observe(counter);
         }
-        
-        // Start counter when visible
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                updateCounter();
-                observer.unobserve(counter);
-            }
-        });
-        
-        observer.observe(counter);
-        
+
         // Skill Bar Animation
         const skillItems = document.querySelectorAll('.skill-item');
         skillItems.forEach(item => {
             const percent = item.getAttribute('data-percent');
             const progressBar = item.querySelector('.skill-progress');
-            
+
             const observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
                     progressBar.style.width = percent + '%';
                     observer.unobserve(item);
                 }
             });
-            
+
             observer.observe(item);
         });
     });
