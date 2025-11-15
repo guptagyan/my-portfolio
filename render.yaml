@@ -1,12 +1,12 @@
 services:
   - type: web
-    name: my-portfolio  # अपनी सेवा का नाम दें
+    name: my-portfolio
     runtime: python
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    startCommand: gunicorn portfolio.wsgi:application
+    startCommand: gunicorn portfolio.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DATABASE_URL
-        value: postgres://user:pass@host:port/dbname  # अपनी डेटाबेस URL डालें
+        value: postgres://user:pass@host:port/dbname
       - key: SECRET_KEY
         value: your-secret-key-here
       - key: DEBUG
