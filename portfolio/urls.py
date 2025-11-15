@@ -9,6 +9,8 @@ from django.http import JsonResponse
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('anpr/', views.anpr, name='anpr'),
+    path('process_anpr/', views.process_anpr, name='process_anpr'), 
     path('about/', views.about, name='about'),
     path('resume/', views.resume, name='resume'),
     path('projects/', views.projects_view, name='projects'),
