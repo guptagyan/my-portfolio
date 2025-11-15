@@ -41,6 +41,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto animate__animated animate__fadeInRight">
                     <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/anpr/' %}active{% endif %}" href="{% url 'anpr' %}">ANPR</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.path == '/resume/' %}active{% endif %}" href="{% url 'resume' %}">Resume</a></li>
                     <li class="nav-item">
