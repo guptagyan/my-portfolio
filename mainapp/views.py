@@ -1,24 +1,17 @@
-import base64
-import io
 import json
 import os
 import random
-
 from django.http import FileResponse, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
-import numpy as np
-from mainapp import anpr_core
 from portfolio import settings
-from PIL import Image
 from .forms import ProfileForm, ProjectForm
 from .models import Project, Resume
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-import base64
 
 def home(request):
     return render(request, 'home.html')
@@ -309,89 +302,3 @@ def chatbot(request):
             'response': "Apologies, I'm having trouble processing your request. Please try again later.",
             'error': str(e)
         }, status=500)
-    
-
-def anpr(request):
-    return render(request, 'anpr.html', {
-        'plate_result': '---',
-        'status_message': 'Ready to upload',
-        'status_class': 'success',
-        'image_base64': None
-    })
-    
-
-def process_anpr(request):
-    """Handles image upload (file or camera data) and runs the ANPR process."""
-    plate_result = "---"
-    status_message = "Ready to upload"
-    status_class = "success"
-    img_bytes = None
-    uploaded_file = None
-    
-    # 1. Image Source Detection and Reading
-    try:
-        if request.method == 'POST':
-            if 'vehicle_image' in request.FILES:
-                # Case 1: File Upload (Browse Image)
-                uploaded_file = request.FILES['vehicle_image']
-                img_bytes = uploaded_file.read()
-
-            elif 'vehicle_image_data' in request.POST:
-                # Case 2: Camera Capture (Base64 Data)
-                base64_data = request.POST['vehicle_image_data']
-                # Clean the Base64 header (e.g., "data:image/jpeg;base64,")
-                if ';base64,' in base64_data:
-                    _, base64_str = base64_data.split(';base64,')
-                else:
-                    base64_str = base64_data
-                    
-                img_bytes = base64.b64decode(base64_str)
-            
-            # --- Continue Processing if image bytes exist ---
-            if img_bytes:
-                # Base64 encoding for HTML preview persistence
-                image_base64 = base64.b64encode(img_bytes).decode('utf-8')
-                
-                # 2. Convert bytes to PIL Image
-                img = Image.open(io.BytesIO(img_bytes)).convert('RGB')
-                
-                # 3. Convert to BGR numpy array for ANPR Core
-                frame = np.array(img)
-                frame = frame[:, :, ::-1] # RGB to BGR conversion
-                
-                # 4. Run the ANPR core logic
-                final_plate = anpr_core.run_anpr(frame)
-                
-                # 5. Handle Results and Status
-                plate_result = final_plate if final_plate and "ERROR" not in final_plate else "NO PLATE DETECTED / CORE ERROR"
-                
-                if "ERROR" in final_plate:
-                     status_message = final_plate
-                     status_class = "error"
-                elif final_plate:
-                    status_message = f"Recognition successful: {final_plate}"
-                    status_class = "success"
-                else:
-                    status_message = "Image processed, but no plate was recognized."
-                    status_class = "error"
-                
-            else:
-                # Should not happen if forms are validated, but good for safety
-                image_base64 = None
-                status_message = "No image data received."
-                status_class = "error"
-
-    except Exception as e:
-        plate_result = "FATAL ERROR"
-        status_message = f"Critical Error in ANPR Core: {type(e).__name__} - {str(e)}"
-        status_class = "error"
-        print(f"--- ANPR CRITICAL ERROR ---: {e}")
-        image_base64 = base64.b64encode(img_bytes).decode('utf-8') if 'img_bytes' in locals() and img_bytes else None
-
-    # Render the page with results and image persistence
-    return render(request, 'anpr.html', {
-        'plate_result': plate_result,
-        'status_message': status_message,
-        'status_class': status_class,
-        'image_base64': image_base64, 
-    })

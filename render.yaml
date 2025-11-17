@@ -1,19 +1,13 @@
 services:
   - type: web
-    name: my-portfolio
-    plan: standard  # free plan pe heavy libraries nahi chalti
+    name: my-portfolio  # अपनी सेवा का नाम दें
     runtime: python
-    buildCommand: |
-      pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cpu
-      pip install -r requirements.txt
-      python manage.py collectstatic --noinput
-    startCommand: gunicorn portfolio.wsgi:application --bind 0.0.0.0:$PORT --timeout 120
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn portfolio.wsgi:application
     envVars:
       - key: DATABASE_URL
-        value: postgres://user:pass@host:port/dbname
+        value: postgres://user:pass@host:port/dbname  # अपनी डेटाबेस URL डालें
       - key: SECRET_KEY
         value: your-secret-key-here
       - key: DEBUG
         value: "False"
-      - key: YOLO_CONFIG_DIR
-        value: /tmp

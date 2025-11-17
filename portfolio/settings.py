@@ -27,8 +27,7 @@ DEBUG = True  # Always True for local development
 ALLOWED_HOSTS = [
     'my-portfolio-sbew.onrender.com',  # Production
     'localhost',                       # Local development
-    '127.0.0.1' ,  
-  '172.16.2.254'                   # Local development
+    '127.0.0.1'                        # Local development
 ]
 
 # Application definition
